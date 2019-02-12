@@ -28,8 +28,11 @@ Site *LectureCSV(char* fichier){
 
 	while(fgets(buffer, MAX_LIGNE, f)!=NULL){
 		stringToArgs(buffer, nom, &la, &lo, categorie, pays, &enDanger);
-
 		save = construireSite(nom, la, lo, categorie, pays, enDanger, save);
+		if(!save){
+			fprintf(stderr,"Erreur d'allocation . Pas assez de mémoire ?\n");
+			return NULL;
+		}
 		affichageSite(save);
 	}
 	fclose(f);
@@ -74,7 +77,7 @@ void stringToFloat(char **buffer, float *dest){
 
 void stringToInt(char **buffer, int *dest){
 	int k=0;
-	while((*buffer)[k]!='\n' && (*buffer)[k]!=EOF ){
+	while((*buffer)[k]!='\0'){
 		k++;
 	}
 	(*buffer)[k]='\0';
