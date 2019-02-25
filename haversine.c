@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 #include "haversine.h"
 
 double toRad(double angleD){
@@ -19,8 +20,26 @@ double calculDistance(double nLat1, double nLon1, double nLat2, double nLon2){
 	return RAYON_TERRE * c; 
 }
 
-double ** matrice( Site **  sites, int taille){
-	double * mat_distance[taille];
+double **allouerMatriceDistance(int n){
+	double **retour = (double **) malloc(sizeof(double*)*n);
+	int k;
+	for(k=0;k<n;k++){
+		retour[k]=(double*)malloc(sizeof(double)*n);
+	}
+
+	return retour;
+}
+
+void libererMatriceDistance(double **mat, int n){
+	int k;
+	for(k=0;k<n;k++){
+		free(mat[k]);
+	}
+	free(mat);
+}
+
+double **calculMatriceDistance(Site **sites, int taille){
+	double **mat_distance= allouerMatriceDistance(taille);
 	for(int i=0;i<taille;i++){
 		for(int j=0;j<i+1;j++){
 			if(i==j){
@@ -35,3 +54,7 @@ double ** matrice( Site **  sites, int taille){
 	}
 	return mat_distance;
 }
+
+
+
+

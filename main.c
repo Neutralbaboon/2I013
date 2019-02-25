@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "lectureFichiers.h"
 #include "site.h"
+#include "haversine.h"
 
 int main(int argc, char** argv){
 	if(argc!=3){
@@ -21,6 +22,11 @@ int main(int argc, char** argv){
 		return 1;
 	}
 
+	double **distance = calculMatriceDistance(tableau, n);
+	
+
+
+	libererMatriceDistance(distance,n);
 	libererSite(tableau, n);
 	return 0;
 }
