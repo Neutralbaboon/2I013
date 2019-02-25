@@ -1,6 +1,15 @@
+int GetCatgeorie( site *s){
+	if(s->categorie=="Cultural"){
+		return 1;
+	}
+	else{
+		return -1;
+	}
+}
+
 Site ** PlusCourtChemin( Site ** sites , taille,  double ){
 		double **mat= matrice(sites, taille);
-		int cn=1; // 1 pour culturel et -1 pour naturel
+		int cn=1; // 1 pour les sites culturels et -1 pour les sites naturels
 		int  nbSites=0;
 		float temps=504;
 		float temps_retour_depart;
@@ -8,9 +17,11 @@ Site ** PlusCourtChemin( Site ** sites , taille,  double ){
 		int nbPays;
 		char pays[MAX_PAYS];
 		Site ** Itineraire;
+		
+		
 		while( temps>6+temps_départ_site){
 			for(int i=0; i<taille;i++){
-				if((mat) &&(cn){
+				if((mat) &&(GetCategories(sites[i]==cn){
 					
 					cn=-cn;
 				}
