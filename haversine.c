@@ -19,3 +19,19 @@ double calculDistance(double nLat1, double nLon1, double nLat2, double nLon2){
 	return RAYON_TERRE * c; 
 }
 
+double ** matrice( Site **  sites, int taille){
+	double * mat_distance[taille];
+	for(int i=0;i<taille;i++){
+		for(int j=0;j<i+1;j++){
+			if(i==j){
+				mat_distance[i][j]=0; // coefficients diagonaux nuls
+			}
+			else{
+				mat_distance[i][j]=calculDistance(sites[i]->la,sites[i]->lo,sites[j]->la,sites[j]->lo);
+				mat_distance[j][i]=mat_distance[i][j]; // La matrice est symétrique
+
+			}
+		}
+	}
+	return mat_distance;
+}
