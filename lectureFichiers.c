@@ -5,7 +5,10 @@
 #include "lectureFichiers.h"
 
 
-Site *LectureCSV(char* fichier){
+Site **LectureCSV(char* fichier, int *n){
+
+	// On essaye d'ouvrir le fichier puis on compte le nombre de ligne à lire
+
 	FILE *f;
 	f = fopen(fichier,"r");
 	if(!f){
@@ -14,29 +17,52 @@ Site *LectureCSV(char* fichier){
 	}
 	printf("Lecture du fichier ...\n");
 
+	*n = 0;
+	char buffer[MAX_LIGNE];
+
+	while(fgets(buffer, MAX_LIGNE, f)!=NULL){
+		*n = *n +1;
+	}
+
+	fclose(f);
+
+	// On crée le tableau contenant les données
+
+	Site **retour = (Site **)malloc(sizeof(Site*)* (*n-1));
+
+	// On reouvre le fichier afin de construire le tableau avec les données
+
+	f = fopen(fichier,"r");
+	if(!f){
+		fprintf(stderr,"Une erreur est survenue !\n");
+		return NULL;
+	}
+
+	int k=0;
 	char nom[MAX_NOM];
 	float la;
 	float lo;
 	char categorie[MAX_CATEGORIE];
 	char pays[MAX_PAYS];
 	int enDanger;
-	Site *save = NULL;
-	char buffer[MAX_LIGNE];
 
 	//Ignorer le commentaire en première ligne
 	fgets(buffer,MAX_LIGNE, f);
 
+	// On remplit le tableau
+
 	while(fgets(buffer, MAX_LIGNE, f)!=NULL){
 		stringToArgs(buffer, nom, &la, &lo, categorie, pays, &enDanger);
-		save = construireSite(nom, la, lo, categorie, pays, enDanger, save);
-		if(!save){
+		retour[k] = construireSite(nom, la, lo, categorie, pays, enDanger);
+		if(!retour[k]){
 			fprintf(stderr,"Erreur d'allocation . Pas assez de mémoire ?\n");
+			libererSite(retour,k+1);
 			return NULL;
 		}
-		affichageSite(save);
+		k++;
 	}
 	fclose(f);
-	return save;
+	return retour;
 }
 
 void stringToArgs(char* buffer, char* nom, float* la, float *lo, char* categorie, char* pays, int *enDanger){

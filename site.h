@@ -22,16 +22,14 @@ typedef struct site{
 	char* categorie;
 	char* pays;
 	int enDanger;
-	struct site* suivant;
 } Site;
 
 //---------------------
 //-----Prototypes------
 //---------------------
 
-Site *construireSite(char* nom, float la, float lo, char* categorie, char* pays, int enDanger, Site* suivant);
-void affichageSite(Site *s);
-void libererSite(Site *liste);
+Site *construireSite(char* nom, float la, float lo, char* categorie, char* pays, int enDanger);
+void libererSite(Site **liste, int n);
 
 
 

@@ -6,7 +6,7 @@
 #include "site.h"
 
 //Lit le fichier .CSV et génère la liste chainée
-Site *LectureCSV(char* fichier);
+Site **LectureCSV(char* fichier, int* n);
 
 //Place la chaine de caractère jusqu'à la prochaine virgule dans dest et met le curseur après la virgule
 void stringToArgs(char* buffer, char* nom, float* la, float *lo, char* categorie, char* pays, int *enDanger);

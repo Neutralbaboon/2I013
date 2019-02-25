@@ -11,9 +11,16 @@ int main(int argc, char** argv){
 	float la = atof(argv[1]);
 	float lo = atof(argv[2]);
 	printf("Commande : ./projet %f %f\n", la,lo);
-	Site *liste=LectureCSV("unesco.csv");
-	libererSite(liste);
 
+	int n;
 
+	Site **tableau=LectureCSV("unesco.csv", &n);
+
+	if(tableau == NULL){
+		fprintf(stderr,"Une erreur s'est produite dans la lecture du fichier ! \n");
+		return 1;
+	}
+
+	libererSite(tableau, n);
 	return 0;
 }
