@@ -40,7 +40,7 @@ Site *construireSite(char* nom, float la, float lo, char* categorie, char* pays,
 
 void libererSite(Site **liste, int n){
 	int k;
-	for(k=0;k<n-1;k++){
+	for(k=0;k<n;k++){
 		free((liste[k])->nom);
 		free((liste[k])->categorie);
 		free((liste[k])->pays);

@@ -17,7 +17,7 @@ Site **LectureCSV(char* fichier, int *n){
 	}
 	printf("Lecture du fichier ...\n");
 
-	*n = 0;
+	*n = -1;
 	char buffer[MAX_LIGNE];
 
 	while(fgets(buffer, MAX_LIGNE, f)!=NULL){
@@ -28,7 +28,7 @@ Site **LectureCSV(char* fichier, int *n){
 
 	// On crée le tableau contenant les données
 
-	Site **retour = (Site **)malloc(sizeof(Site*)* (*n-1));
+	Site **retour = (Site **)malloc(sizeof(Site*)* (*n));
 
 	// On reouvre le fichier afin de construire le tableau avec les données
 
