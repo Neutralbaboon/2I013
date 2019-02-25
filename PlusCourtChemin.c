@@ -1,4 +1,4 @@
-Site ** PlusCourtChemin( Site ** sites , taille, Site depart){
+Site ** PlusCourtChemin( Site ** sites , taille,  double ){
 		double **mat= matrice(sites, taille);
 		int cn=1; // 1 pour culturel et -1 pour naturel
 		int  nbSites=0;
@@ -22,10 +22,11 @@ Site ** PlusCourtChemin( Site ** sites , taille, Site depart){
 				}
 				nbSites++;
 				pays=sites[i]->pays;
+				site_actuelle=site[i];
 				if(sites[i]->enDanger==0){
 					nbPoints+=1;
 				}
-				temps_retour_depart=80*distance(
+				temps_retour_depart=80*mat[i][site_actuelle];
 		}
 	}
 	nbPoints+= 2*nbPays; 
