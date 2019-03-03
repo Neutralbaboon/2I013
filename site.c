@@ -34,6 +34,7 @@ Site *construireSite(char* nom, float la, float lo, char* categorie, char* pays,
 	}
 
 	retour->enDanger = enDanger;
+	retour->visite=0;
 	return retour;
 }
 

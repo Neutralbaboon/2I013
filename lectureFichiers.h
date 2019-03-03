@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "site.h"
 
+
 //Lit le fichier .CSV et génère la liste chainée
 Site **LectureCSV(char* fichier, int* n);
 

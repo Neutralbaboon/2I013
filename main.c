@@ -3,6 +3,8 @@
 #include "lectureFichiers.h"
 #include "site.h"
 #include "haversine.h"
+#include "procheVoisin.h"
+#include "gestionItineraire.h"
 
 int main(int argc, char** argv){
 	if(argc!=3){
@@ -23,9 +25,12 @@ int main(int argc, char** argv){
 	}
 
 	double **distance = calculMatriceDistance(tableau, n);
-	
+	Lsite *liste = lancerProcheVoisin(tableau, distance, n, la, lo);
+
+	afficherListeItineraire(tableau,liste);
 
 
+	libererListeItineraire(liste);
 	libererMatriceDistance(distance,n);
 	libererSite(tableau, n);
 	return 0;
