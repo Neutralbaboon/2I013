@@ -28,6 +28,8 @@ int main(int argc, char** argv){
 	Lsite *liste = lancerProcheVoisin(tableau, distance, n, la, lo);
 
 	afficherListeItineraire(tableau,liste);
+	
+	printf("%d", compterPoints(tableau,liste);
 
 
 	libererListeItineraire(liste);

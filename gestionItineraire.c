@@ -22,17 +22,25 @@ Lsite *ajouterListeItineraire(Lsite *liste, int site){
 
 }
 
-/*int compterPoints(Lsite *liste){
-	//TODO
+int compterPoints(Site **tableau, Lsite *liste){
+	int score=0;
+	while(liste){
+		score++; // Chaque site UNESCO visité compte pour 1 point
+		if(!(tableau[liste->site]->visite)) score +=2; //Chaque pays différent visité compte pour 2 points
+		if(tableau[liste->site]->enDanger) score+=3; //Chaque site qui est listé comme “en danger” compte pour 3 points
+		return score;
 }
 
-void enregistrerItineraire(Lsite *liste){
+/*void enregistrerItineraire(Site **tableau, Lsite *liste){
+	FILE* fopen(const char* "tour.txt", const char* "w+");
+	
+	
+}
+*/
+/*void ouvrirItineraire(void){
 	//TODO
 }
-
-void ouvrirItineraire(void){
-	//TODO
-}*/
+*/
 
 void afficherListeItineraire(Site **tableau, Lsite *liste){
 	while(liste){
