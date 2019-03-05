@@ -19,6 +19,10 @@ typedef struct lsite{
 Lsite *ajouterListeItineraire(Lsite *liste, int site);
 void libererListeItineraire(Lsite *iti);
 void afficherListeItineraire(Site **tableau, Lsite *liste);
+int compterPoints(Site **tableau, Lsite *liste);
+void enregistrerItineraire(Site **tableau, Lsite *liste, float la, float lo);
+void ouvrirItineraire(void);
+void afficherPoint(Site **tableau, Lsite *liste);
 
 
 
