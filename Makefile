@@ -8,7 +8,7 @@ all: projet
 projet: main.o
 	$(CC) -o projet *.o	-lm
 
-main.o: main.c lectureFichiers.o site.o harversine.o procheVoisin.o gestionItineraire.o
+main.o: main.c lectureFichiers.o site.o harversine.o procheVoisin.o gestionItineraire.o benchmark.o
 	$(CC) -c -o main.o main.c $(CFLAGS)
 
 site.o: site.h site.c
@@ -26,9 +26,9 @@ procheVoisin.o: procheVoisin.h procheVoisin.c
 gestionItineraire.o: gestionItineraire.h gestionItineraire.c
 	$(CC) -c -o gestionItineraire.o gestionItineraire.c $(CFLAGS)
 
+benchmark.o: benchmark.h benchmark.c
+	$(CC) -c -o benchmark.o benchmark.c $(CFLAGS)
+
 clean:
 	rm *.o
 	rm projet
-
-
-	 	
