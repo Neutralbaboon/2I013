@@ -5,6 +5,7 @@
 #include "haversine.h"
 #include "procheVoisin.h"
 #include "gestionItineraire.h"
+#include "benchmark.h"
 
 int main(int argc, char** argv){
 	if(argc!=3){
@@ -32,11 +33,15 @@ int main(int argc, char** argv){
 	afficherPoint(tableau,liste);
 
 	enregistrerItineraire(tableau,liste,la,lo);
-	ouvrirItineraire();
+
+	//ouvrirItineraire();
 
 
 	libererListeItineraire(liste);
 	libererMatriceDistance(distance,n);
 	libererSite(tableau, n);
+	
+	benchmark(10);
 	return 0;
+
 }

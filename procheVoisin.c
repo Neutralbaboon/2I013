@@ -28,6 +28,7 @@ Lsite *lancerProcheVoisin(Site **tableau, double** distance, int n, float la, fl
 		//printf("%s position = (%lf , %lf) \n",tableau[newIndicePlusProche]->nom,tableau[newIndicePlusProche]->la,tableau[newIndicePlusProche]->lo);
 	}while(tempstotal + calcul + calculDistance(la, lo, tableau[siteprochain]->la, tableau[siteprochain]->lo)/VITESSE <= MAX_VOYAGE);
 
+	printf("%lf", tempstotal);
 	return liste;
 
 }
