@@ -94,3 +94,31 @@ void afficherPoint(Site **tableau, Lsite *liste){
 	printf("**************************\n");
 }
 
+
+void optimiserItineraire(double **distance, Lsite *liste){
+	int modification = 1;
+	Lsite *curseur1;
+	Lsite *curseur2;
+	int save;
+
+	while(modification){
+		curseur1 = liste;
+		modification = 0;
+		while(curseur1 && !modification){
+			curseur2 = curseur1;
+			while(curseur2 && !modification){
+				if(curseur1 != curseur2 && curseur1->suivant != curseur2 && distance[curseur1->site][curseur1->suivant->site] > distance[curseur1->site][curseur2->site]){
+					modification = 1;
+					save = curseur1->suivant->site;
+					curseur1->suivant->site = curseur2->site;
+					curseur2->site = save;
+				}
+				curseur2 = curseur2 -> suivant;
+			}
+			curseur1 = curseur1 -> suivant;
+		}
+	}
+
+
+}
+

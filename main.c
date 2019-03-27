@@ -29,6 +29,10 @@ int main(int argc, char** argv){
 
 	afficherListeItineraire(tableau,liste);
 
+	optimiserItineraire(distance,liste);
+
+	afficherListeItineraire(tableau,liste);
+
 	afficherPoint(tableau,liste);
 
 	enregistrerItineraire(tableau,liste,la,lo);
