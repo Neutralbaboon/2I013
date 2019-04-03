@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gestionItineraire.h"
+#include "haversine.h"
 
 Lsite *ajouterListeItineraire(Lsite *liste, int site){
 	Lsite *ajout = (Lsite *)malloc(sizeof(Lsite));
@@ -44,6 +45,22 @@ int compterPoints(Site **tableau, Lsite *liste){
 	}
 	
 	return score;
+}
+
+double compterHeure(Site **tableau, double **distance, double la , double lo , Lsite *liste){
+	double heure;
+
+	heure = calculDistance(tableau[liste->site]->la, tableau[liste->site]->lo, la, lo) / VITESSE;
+	heure += TEMPS_SITE;
+
+	while(liste->suivant){
+		heure += distance[liste->site][liste->suivant->site]/VITESSE;
+		heure += TEMPS_SITE;
+		liste = liste->suivant;
+	}
+
+	heure += calculDistance(tableau[liste->site]->la, tableau[liste->site]->lo, la, lo) / VITESSE;
+	return heure;
 }
 
 void enregistrerItineraire(Site **tableau, Lsite *liste, float la, float lo){

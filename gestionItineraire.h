@@ -24,6 +24,7 @@ void enregistrerItineraire(Site **tableau, Lsite *liste, float la, float lo);
 void ouvrirItineraire(void);
 void afficherPoint(Site **tableau, Lsite *liste);
 void optimiserItineraire(double **distance, Lsite *liste);
+double compterHeure(Site **tableau, double **distance, double la , double lo , Lsite *liste);
 
 
 

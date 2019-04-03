@@ -29,11 +29,10 @@ int main(int argc, char** argv){
 
 	afficherListeItineraire(tableau,liste);
 
-	optimiserItineraire(distance,liste);
-
 	afficherListeItineraire(tableau,liste);
-
 	afficherPoint(tableau,liste);
+	printf("Nombre d'heure = %lf\n",compterHeure(tableau, distance, la , lo , liste));
+
 
 	enregistrerItineraire(tableau,liste,la,lo);
 	ouvrirItineraire();
