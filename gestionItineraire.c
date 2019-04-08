@@ -24,6 +24,19 @@ Lsite *ajouterListeItineraire(Lsite *liste, int site){
 
 }
 
+void ajouterentreListeItineraire(Lsite *sitea , int ajout){
+	Lsite *lajout = malloc(sizeof(Lsite));
+	lajout->site = ajout;
+	lajout->suivant = sitea->suivant;
+	sitea->suivant = lajout;
+}
+
+void supprimerSiteSuivant(Lsite *site){
+	Lsite *save = site->suivant->suivant;
+	free(site->suivant);
+	site->suivant = save;
+}
+
 int compterPoints(Site **tableau, Lsite *liste){
 	int score=0;
 	Lsite *cur1=liste;
@@ -211,6 +224,126 @@ void optimiserItineraire(double **distance, Lsite *liste){
 	}
 
 	free(tsite);
+
+}
+
+int essaiCompleterItineraire(Site **tableau, double **distance, Lsite *liste, int n, double la , double lo){
+	//On recherche par quel catégorie de site ne peut pas compléter l'itinéraire
+	char nontype[MAX_CATEGORIE];
+	categorieImpossible(tableau,liste,nontype);
+
+	// Pour tout couple (a,b=a+1) d'arrete on cherche le site le plus proche
+	Lsite *curseura = liste;
+	Lsite *curseurb= liste->suivant;
+	int siteencours;
+	double distanceencours;
+
+	//On enregistre a tel que la déviation soit minimum
+	Lsite *curseuramin;
+	int siteplusproche;
+	double mindistance = 100000;
+
+	while(curseurb){
+		siteencours = plusProcheSiteQuiNEstPasDeType(tableau, distance, curseura->site, curseurb->site, n, nontype);
+		distanceencours = distance[siteencours][curseura->site]+distance[siteencours][curseurb->site];
+		if(distanceencours<mindistance){
+			curseuramin = curseura;
+			mindistance = distanceencours;
+			siteplusproche = siteencours;
+		}
+		curseura = curseura->suivant;
+		curseurb = curseurb->suivant;
+	}
+
+	ajouterentreListeItineraire(curseuramin , siteplusproche);
+	if(compterHeure(tableau, distance, la, lo, liste)<MAX_VOYAGE){
+		return 1;
+	}
+	
+	supprimerSiteSuivant(curseuramin);
+	return 0;
+
+}
+
+int plusProcheSiteQuiNEstPasDeType(Site **tableau, double** distance, int a, int b, int n , char* nontype){
+	int k;
+	int sitemin;
+	double distancemin=2000000;
+	double calcul;
+
+	for(k=0;k<n;k++){
+		if(k!=a && k!=b && strcmp(tableau[k]->categorie, nontype)!=0 ){
+			calcul = distance[a][k]+distance[b][k];
+			if(calcul <distancemin){
+				distancemin = calcul;
+				sitemin = k;
+			}
+
+		}
+	}
+
+	return sitemin;
+
+}
+
+void categorieImpossible(Site **tableau, Lsite *liste, char *nontype){
+	int nombrenaturel = nombreDeNaturel(tableau,liste);
+	int nombreculturel = nombreDeCulturel(tableau,liste);
+
+	if(nombrenaturel > nombreculturel){
+		strcpy(nontype,"Natural");
+	}
+	else{
+		if(nombrenaturel< nombreculturel){
+			strcpy(nontype,"Cultural");		
+		}
+		else{
+			strcpy(nontype, "");
+		}
+	}
+
+
+}
+
+int nombreDeNaturel(Site **tableau, Lsite *liste){
+	int retour=0;
+	while(liste){
+		if(strcmp(tableau[liste->site]->categorie,"Natural")==0){
+			retour++;
+		}
+		liste = liste->suivant;
+	}
+
+	return retour;
+
+}
+
+int nombreDeCulturel(Site **tableau, Lsite *liste){
+	int retour=0;
+	while(liste){
+		if(strcmp(tableau[liste->site]->categorie,"Cultural")==0){
+			retour++;
+		}
+		liste = liste->suivant;
+	}
+	return retour;
+}
+
+int nombreDeMixte(Site **tableau, Lsite *liste){
+	int retour=0;
+	while(liste){
+		if(strcmp(tableau[liste->site]->categorie,"Mixed")==0){
+			retour++;
+		}
+		liste = liste->suivant;
+	}
+	return retour;
+}
+
+void completerItineraire(Site **tableau, double **distance, Lsite *liste, int n, double la , double lo){
+	while(essaiCompleterItineraire(tableau, distance, liste, n, la , lo)){
+		optimiserItineraire(distance, liste);
+	}
 
 }
 
