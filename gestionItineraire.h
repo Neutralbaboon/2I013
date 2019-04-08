@@ -25,7 +25,11 @@ void ouvrirItineraire(void);
 void afficherPoint(Site **tableau, Lsite *liste);
 void optimiserItineraire(double **distance, Lsite *liste);
 double compterHeure(Site **tableau, double **distance, double la , double lo , Lsite *liste);
-
+int nbelem(Lsite *liste);
+int max(int x, int y);
+int min(int x, int y);
+int *deuxopt(double **distance, int *tsite, int nbsite);
+int *remplacerarrete(int *tsite, int i, int j, int nbsite);
 
 
 

@@ -111,31 +111,106 @@ void afficherPoint(Site **tableau, Lsite *liste){
 	printf("**************************\n");
 }
 
+int min(int x , int y){
+	if(x<y){
+		return x;
+	}
+	return y;
+}
 
-void optimiserItineraire(double **distance, Lsite *liste){
-	int modification = 1;
-	Lsite *curseur1;
-	Lsite *curseur2;
-	int save;
+int max(int x, int y){
+	if(x>y){
+		return x;
+	}
+	return y;
+}
 
-	while(modification){
-		curseur1 = liste;
-		modification = 0;
-		while(curseur1 && !modification){
-			curseur2 = curseur1;
-			while(curseur2 && !modification){
-				if(curseur1 != curseur2 && curseur1->suivant != curseur2 && distance[curseur1->site][curseur1->suivant->site] > distance[curseur1->site][curseur2->site]){
-					modification = 1;
-					save = curseur1->suivant->site;
-					curseur1->suivant->site = curseur2->site;
-					curseur2->site = save;
+int nbelem(Lsite *liste){
+	int retour = 0;
+	while(liste){
+		retour++;
+		liste = liste->suivant;
+	}
+	return retour;
+}
+
+
+int *deuxopt(double **distance, int *tsite, int nbsite){
+	int amelioration = 1;
+	int i;
+	int j;
+	double dxixi1; 
+	double dxjxj1;
+	double dxixj;
+	double dxi1xj1;
+
+	while(amelioration){
+		amelioration = 0;
+		for(i=0;i<nbsite-1;i++){
+			for(j=0;j<nbsite-1;j++){
+				if(j!= i-1 && j!= i && j!= i+1){
+					dxixi1 = distance[tsite[i]][tsite[i+1]];
+					dxjxj1 = distance[tsite[j]][tsite[j+1]];
+					dxixj = distance[tsite[i]][tsite[j]];
+					dxi1xj1 = distance[tsite[i+1]][tsite[j+1]];
+					if(dxixi1 + dxjxj1 > dxixj + dxi1xj1){
+						amelioration = 1;
+						tsite = remplacerarrete(tsite,i,j,nbsite);
+					}
 				}
-				curseur2 = curseur2 -> suivant;
 			}
-			curseur1 = curseur1 -> suivant;
 		}
+	} 
+	return tsite;
+
+}
+
+int *remplacerarrete(int *tsite, int i, int j, int nbsite){
+	int *retour = malloc(sizeof(int)* nbsite);
+	int k;
+	int l;
+
+	for(k=0;k<=min(i,j);k++){
+		retour[k] = tsite[k];
 	}
 
+	for(l=max(i,j);l>min(i,j);l--){
+		retour[k] = tsite[l]; 
+		k++;
+	}
+
+	for(k=max(i,j)+1;k<nbsite;k++){
+		retour[k]= tsite[k];
+	}
+
+
+	free(tsite);
+	return retour;
+}
+
+void optimiserItineraire(double **distance, Lsite *liste){
+	int nbsite = nbelem(liste);
+	int *tsite = malloc(sizeof(int) * nbsite);
+	int k= 0;
+
+	Lsite *saveliste = liste;
+	while(saveliste){
+		tsite[k]=saveliste->site;
+		k++;
+		saveliste = saveliste->suivant;
+	}
+
+	tsite = deuxopt(distance,tsite, nbsite);
+
+	saveliste = liste;
+	k=0;
+	while(saveliste){
+		saveliste->site = tsite[k];
+		k++;
+		saveliste = saveliste->suivant;
+	}
+
+	free(tsite);
 
 }
 

@@ -27,11 +27,15 @@ int main(int argc, char** argv){
 	double **distance = calculMatriceDistance(tableau, n);
 	Lsite *liste = lancerProcheVoisin(tableau, distance, n, la, lo);
 
-	afficherListeItineraire(tableau,liste);
-
-	afficherListeItineraire(tableau,liste);
+	printf("Nombre d'heure avant optimisation = %lf\n",compterHeure(tableau, distance, la , lo , liste));
 	afficherPoint(tableau,liste);
-	printf("Nombre d'heure = %lf\n",compterHeure(tableau, distance, la , lo , liste));
+
+	optimiserItineraire(distance,liste);
+
+
+	//afficherListeItineraire(tableau,liste);
+	printf("Nombre d'heure apres optimisation = %lf\n",compterHeure(tableau, distance, la , lo , liste));
+	afficherPoint(tableau,liste);
 
 
 	enregistrerItineraire(tableau,liste,la,lo);
