@@ -25,7 +25,6 @@ Lsite *lancerProcheVoisin(Site **tableau, double** distance, int n, float la, fl
 		siteprecedent = siteprochain;
 		siteprochain = suivantProcheVoisin(tableau, distance, n, siteprecedent);
 		calcul = calculDistance(tableau[siteprecedent]->la, tableau[siteprecedent]->lo, tableau[siteprochain]->la, tableau[siteprochain]->lo)/VITESSE + TEMPS_SITE;
-		//printf("%s position = (%lf , %lf) \n",tableau[newIndicePlusProche]->nom,tableau[newIndicePlusProche]->la,tableau[newIndicePlusProche]->lo);
 	}while(tempstotal + calcul + calculDistance(la, lo, tableau[siteprochain]->la, tableau[siteprochain]->lo)/VITESSE <= MAX_VOYAGE);
 
 	return liste;
@@ -54,11 +53,8 @@ int suivantProcheVoisin(Site **tableau, double** distance, int n, int actuel){
 	int k;
 	int retour=0;
 	if(strcmp(tableau[actuel]->categorie,"Mixed")==0){
-		while(tableau[retour]->visite == 1){
-			retour++;
-		}
 
-		for(k=retour+1;k<n;k++){
+		for(k=0;k<n;k++){
 			if (tableau[k]->visite == 0 && distance[actuel][k]<distance[actuel][retour])
 			{
 				retour = k;
@@ -69,11 +65,8 @@ int suivantProcheVoisin(Site **tableau, double** distance, int n, int actuel){
 
 	}
 	else{
-		while(tableau[retour]->visite == 1 || strcmp(tableau[retour]->categorie,tableau[actuel]->categorie)==0){
-			retour++;
-		}
 
-		for(k=retour+1;k<n;k++){
+		for(k=0;k<n;k++){
 			if (tableau[k]->visite == 0 && distance[actuel][k]<distance[actuel][retour] && strcmp(tableau[k]->categorie,tableau[actuel]->categorie)!=0)
 			{
 				retour = k;

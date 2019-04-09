@@ -257,6 +257,7 @@ int essaiCompleterItineraire(Site **tableau, double **distance, Lsite *liste, in
 
 	ajouterentreListeItineraire(curseuramin , siteplusproche);
 	if(compterHeure(tableau, distance, la, lo, liste)<MAX_VOYAGE){
+		tableau[siteplusproche]->visite=1;
 		return 1;
 	}
 	
@@ -272,7 +273,7 @@ int plusProcheSiteQuiNEstPasDeType(Site **tableau, double** distance, int a, int
 	double calcul;
 
 	for(k=0;k<n;k++){
-		if(k!=a && k!=b && strcmp(tableau[k]->categorie, nontype)!=0 ){
+		if(k!=a && k!=b && tableau[k]->visite == 0 && strcmp(tableau[k]->categorie, nontype)!=0){
 			calcul = distance[a][k]+distance[b][k];
 			if(calcul <distancemin){
 				distancemin = calcul;
